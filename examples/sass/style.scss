@@ -1,0 +1,46 @@
+
+// @module: font-faces
+@import "font-faces";
+
+$FONTS_URI: '../fonts';
+
+$FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf', 'svg');
+
+
+
+/*
+ * @fonts
+ */
+@include font-faces(
+   'Asap'
+  ,'asap'
+  ,(400, italic, 700, (700, italic))
+);
+
+@include font-face('Lato', null, 400, normal, 'woff');
+
+
+
+/*
+ * @base
+ */
+html {
+  overflow-y: scroll;
+  font-size: 100%;
+}
+body {
+  color: #333;
+  font: 18px/1.4 Arial, Helvetica, Freesans, sans-serif;
+  background: #fff;
+}
+
+
+
+/*
+ * @page
+ */
+#page {
+  margin: 0 auto;
+  width: 460px;
+  font-family: Asap, sans-serif;
+}
