@@ -4,28 +4,28 @@
 @font-face {
   font-family: "Asap";
   src: url("../fonts/asap/regular.eot");
-  src: url("../fonts/asap/regular.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/regular.woff") format("woff"), url("../fonts/asap/regular.ttf") format("truetype"), url("../fonts/asap/regular.svg#webfont") format("svg");
+  src: url("../fonts/asap/regular.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/regular.woff") format("woff"), url("../fonts/asap/regular.ttf") format("truetype");
   font-style: normal;
   font-weight: 400; }
 
 @font-face {
   font-family: "Asap";
   src: url("../fonts/asap/italic.eot");
-  src: url("../fonts/asap/italic.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/italic.woff") format("woff"), url("../fonts/asap/italic.ttf") format("truetype"), url("../fonts/asap/italic.svg#webfont") format("svg");
+  src: url("../fonts/asap/italic.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/italic.woff") format("woff"), url("../fonts/asap/italic.ttf") format("truetype");
   font-style: italic;
   font-weight: 400; }
 
 @font-face {
   font-family: "Asap";
   src: url("../fonts/asap/bold.eot");
-  src: url("../fonts/asap/bold.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/bold.woff") format("woff"), url("../fonts/asap/bold.ttf") format("truetype"), url("../fonts/asap/bold.svg#webfont") format("svg");
+  src: url("../fonts/asap/bold.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/bold.woff") format("woff"), url("../fonts/asap/bold.ttf") format("truetype");
   font-style: normal;
   font-weight: 700; }
 
 @font-face {
   font-family: "Asap";
   src: url("../fonts/asap/bold-italic.eot");
-  src: url("../fonts/asap/bold-italic.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/bold-italic.woff") format("woff"), url("../fonts/asap/bold-italic.ttf") format("truetype"), url("../fonts/asap/bold-italic.svg#webfont") format("svg");
+  src: url("../fonts/asap/bold-italic.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/bold-italic.woff") format("woff"), url("../fonts/asap/bold-italic.ttf") format("truetype");
   font-style: italic;
   font-weight: 700; }
 

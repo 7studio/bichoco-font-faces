@@ -163,13 +163,11 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 // Convention: [ [ weight || style ] | weight-style ] && .[ eot | woff | ttf | otf | svg | svgz ]
 // Exs: regular.eot, bold-italic.woff, italic.otf, bold.svg
 // @function bluid-font-file-name
-// @arg {string} $folder-name Directory name where font files are stored
 // @arg {number} $weight font-weight value
 // @arg {string} $style font-style value
 // @return string
 @function bluid-font-file-name(
-   $folder-name
-  ,$weight
+   $weight
   ,$style
 )
 {
@@ -190,7 +188,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
     $name: get-font-weight-file-name($weight);
   }
 
-  @return '#{$FONTS_URI}/#{$folder-name}/#{$name}';
+  @return $name;
 }
 
 
