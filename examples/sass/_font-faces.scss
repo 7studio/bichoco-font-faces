@@ -63,7 +63,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf', 'svg') !default;
 // Find whether extension of file is associated to a format strings defined by the specification
 // http://www.w3.org/TR/css3-fonts/#fontformats
 // @function is-font-face-extension
-// @arg {string} $extension extension of file prefixed by a dot
+// @arg {string} $extension extension of file
 // @return boolean
 @function is-font-face-extension($extension)
 {
@@ -198,9 +198,9 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf', 'svg') !default;
 // @mixin: font-face
 // @arg {string} $family-name The font-family descriptor value
 // @arg {string} $folder-name Directory name where font family files are stored
-// @arg {string|number} $weight font-weight descriptor value. Default: 400
-// @arg {string} $style font-style descriptor value. Default: normal
-// @arg {list|string} $extensions List of font extensions. Default: $FONT_FACES_EXTENSIONS
+// @arg {string|number} $weight font-weight descriptor value
+// @arg {string} $style font-style descriptor value
+// @arg {list|string} $extensions List of font extensions
 // @warns When $extensions is not a list or a string
 @mixin font-face(
    $family-name
@@ -246,8 +246,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf', 'svg') !default;
 
   $file-uri: bluid-font-file-name($folder-name, $weight, $style);
 
-  @font-face
-  {
+  @font-face {
     font-family: quote($family-name);
 
     // IE9 Compat Modes
@@ -290,7 +289,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf', 'svg') !default;
 // @arg {string} $family-name The font-family descriptor value
 // @arg {string} $folder-name Directory name where font family files are stored
 // @arg {list} $variations List of values or combinations identifying a variation of the font. Ex: (400, italic, 700, (700, italic))
-// @arg {list|string} $extensions List of font extensions prefixed by a dot. Default: $FONT_FACES_EXTENSIONS
+// @arg {list|string} $extensions List of font extensions
 // @warns When you put just one style or nothing
 @mixin font-faces(
    $family-name
