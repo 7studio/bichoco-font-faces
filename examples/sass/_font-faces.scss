@@ -8,7 +8,7 @@ $FONTS_URI: '' !default;
 // List of font extensions used to construct the @font-face rule
 // The list can be overloaded by a list or string in each mixin inclusion
 // @var {list|string} $FONT_FACES_EXTENSIONS
-$FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf', 'svg') !default;
+$FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 
 
 
