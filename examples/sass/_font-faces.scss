@@ -122,6 +122,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 @function bluid-font-face-src(
    $file-uri
   ,$extension
+  ,$arguments
 )
 {
   $format: '';
@@ -141,7 +142,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
   }
   @else if $extension == 'svg' or $extension == 'svgz'
   {
-    $extension: '#{$extension}#webfont';
+    $extension: '#{$extension}##{nth($arguments,1)}--#{nth($arguments,2)}';
     $format: 'svg';
   }
   @else
@@ -244,7 +245,8 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
     $extensions: append((), $extensions);
   }
 
-  $file-uri: bluid-font-file-name($folder-name, $weight, $style);
+  $file-name: bluid-font-file-name($weight, $style);
+  $file-uri: '#{$FONTS_URI}/#{$folder-name}/#{$file-name}';
 
   @font-face {
     font-family: quote($family-name);
@@ -267,7 +269,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 
         $src: append(
            $src
-          ,bluid-font-face-src($file-uri, $extension)
+          ,bluid-font-face-src($file-uri, $extension, ($folder-name, $file-name))
           ,comma
         );
       }
