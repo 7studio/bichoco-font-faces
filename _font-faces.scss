@@ -12,54 +12,6 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 
 
 
-// Find whether the value of argument is a font-style descriptor value
-// http://www.w3.org/TR/css3-fonts/#descdef-font-style
-// @function is-font-face-style
-// @arg {string} $value Font face style value
-// @return boolean
-@function is-font-face-style($value)
-{
-  $keywords: ('normal', 'italic', 'oblique');
-
-  $index: index($keywords, $value);
-
-  @return if(($index != false), true, false);
-}
-
-
-
-// Find whether the value of argument is a font-weight descriptor value
-// http://www.w3.org/TR/css3-fonts/#descdef-font-weight
-// @function is-font-face-weight
-// @arg {string|number} $value Font face weight value
-// @return boolean
-@function is-font-face-weight($value)
-{
-  $keywords: ('normal', 'bold', 100, 200, 300, 400, 500, 600, 700, 800, 900);
-
-  $index: index($keywords, $value);
-
-  @return if(($index != false), true, false);
-}
-
-
-
-// Find whether the value of argument is a font-stretch descriptor value
-// http://www.w3.org/TR/css3-fonts/#descdef-font-stretch
-// @function is-font-face-stretch
-// @arg {string|number} $value Font face stretch value
-// @return boolean
-@function is-font-face-stretch($value)
-{
-  $keywords: ('normal', 'ultra-condensed', 'extra-condensed', 'condensed', 'semi-condensed', 'semi-expanded', 'expanded', 'extra-expanded', 'ultra-expanded');
-
-  $index: index($keywords, $value);
-
-  @return if(($index != false), true, false);
-}
-
-
-
 // Find whether extension of file is associated to a format strings defined by the specification
 // http://www.w3.org/TR/css3-fonts/#fontformats
 // @function is-font-face-extension
@@ -72,43 +24,6 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
   $index: index($extensions, $extension);
 
   @return if(($index != false), true, false);
-}
-
-
-
-// Give the font-weight keyword as a number
-// @function get-font-weight-number
-// @arg {string} $value font-weight keyword
-// @return number
-@function get-font-weight-number($value)
-{
-  $numbers: (400, 700);
-  $keywords: ('normal', 'bold');
-
-  $index: index($keywords, $value);
-
-  @if $index != false
-  {
-    @return nth($numbers, $index);
-  }
-
-  @return 400;
-}
-
-
-
-// Give the literal weight name to construct the font filename
-// @function get-font-weight-file-name
-// @arg {number} $value font-weight number
-// @return string
-@function get-font-weight-file-name($value)
-{
-  $numbers: (100, 200, 300, 400, 500, 600, 700, 800, 900);
-  $names: ('thin', 'extralight', 'light', 'regular', 'medium', 'semibold', 'bold', 'extrabold', 'black');
-
-  $index: index($numbers, $value);
-
-  @return nth($names, $index);
 }
 
 
