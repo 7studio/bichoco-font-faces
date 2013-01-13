@@ -14,10 +14,10 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf');
 @include font-faces(
    'Asap'
   ,'asap'
-  ,(400, italic, 700, (700, italic))
+  ,(400, italic, 700, (italic, 700))
 );
 
-@include font-face('Lato', null, 400, normal, 'woff');
+@include font-face('Lato', null, normal, 400, 'woff');
 
 
 
