@@ -4,7 +4,7 @@
 
 $FONTS_URI: '../fonts';
 
-$FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf');
+$FONT_FACES_EXTENSIONS: ('.eot', '.woff', '.ttf');
 
 
 
@@ -14,10 +14,10 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf');
 @include font-faces(
    'Asap'
   ,'asap'
-  ,(400, italic, 700, (italic, 700))
+  ,('n4', 'i7')
 );
 
-@include font-face('Lato', null, normal, 400, 'woff');
+@include font-face('Lato', null, 'n4', '.woff');
 
 
 

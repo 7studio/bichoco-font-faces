@@ -8,50 +8,17 @@ $FONTS_URI: '' !default;
 // List of font extensions used to construct the @font-face rule
 // The list can be overloaded by an other list or a string in each mixin inclusion
 // @var {list|string} $FONT_FACES_EXTENSIONS
-$FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
+$FONT_FACES_EXTENSIONS: ('.eot', '.woff', '.ttf') !default;
 
 
 
-// Find whether the given variable is a font-style descriptor value
-// http://www.w3.org/TR/css3-fonts/#descdef-font-style
-// @function is-font-face-style
-// @arg {string} $arg The font-style descriptor value being evaluated
+// Find whether the given variable is a recognised shortened variation
+// @function is-font-face-shortened-variation
+// @arg {string} $arg The shortened variation being evaluated
 // @return boolean
-@function is-font-face-style($arg)
+@function is-font-face-shortened-variation($arg)
 {
-  $values: ('normal', 'italic', 'oblique');
-
-  $index: index($values, $arg);
-
-  @return if(($index != false), true, false);
-}
-
-
-
-// Find whether the given variable is a font-weight descriptor value
-// http://www.w3.org/TR/css3-fonts/#descdef-font-weight
-// @function is-font-face-weight
-// @arg {string|number} $arg The font-weight descriptor value being evaluated
-// @return boolean
-@function is-font-face-weight($arg)
-{
-  $values: ('normal', 'bold', 100, 200, 300, 400, 500, 600, 700, 800, 900);
-
-  $index: index($values, $arg);
-
-  @return if(($index != false), true, false);
-}
-
-
-
-// Find whether the given variable is a font-stretch descriptor value
-// http://www.w3.org/TR/css3-fonts/#descdef-font-stretch
-// @function is-font-face-stretch
-// @arg {string} $arg The font-stretch descriptor value being evaluated
-// @return boolean
-@function is-font-face-stretch($arg)
-{
-  $values: ('normal', 'ultra-condensed', 'extra-condensed', 'condensed', 'semi-condensed', 'semi-expanded', 'expanded', 'extra-expanded', 'ultra-expanded');
+  $values: ('i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8', 'i9', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9');
 
   $index: index($values, $arg);
 
@@ -61,14 +28,14 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 
 
 // Find whether the given variable is associated to an extension defined by the specification
-// The variable (file extension) must not contain dot at the beginning
+// The variable (file extension) must contain dot at the beginning
 // http://www.w3.org/TR/css3-fonts/#fontformats
 // @function is-font-face-extension
 // @arg {string} $arg The file extension being evaluated
 // @return boolean
 @function is-font-face-extension($arg)
 {
-  $extensions: ('eot', 'woff', 'ttf', 'otf');
+  $extensions: ('.eot', '.woff', '.ttf', '.otf');
 
   $index: index($extensions, $arg);
 
@@ -77,39 +44,19 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 
 
 
-// Convert the font-weight descriptor value to a number
-// @function get-font-weight-number
-// @arg {string} $value The font-weight descriptor value being converted
-// @return number
-@function get-font-face-weight-number($value)
+// Explode shortened variation and return font-style and font-weight descriptors
+// https://gist.github.com/4135145
+// @function explode-font-face-shortened-variation
+// @arg {string} $variation The shortened variation being exploded
+// @return list
+@function explode-font-face-shortened-variation($variation)
 {
-  $numbers: (400, 700);
-  $keywords: ('normal', 'bold');
+  $abbreviations: ('i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8', 'i9', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9');
+  $variations: ((italic, 100), (italic, 200), (italic, 300), (italic, 400), (italic, 500), (italic, 600), (italic, 700), (italic, 800), (italic, 900), (normal, 100), (normal, 200), (normal, 300), (normal, 400), (normal, 500), (normal, 600), (normal, 700), (normal, 800), (normal, 900));
 
-  $index: index($keywords, $value);
+  $index: index($abbreviations, $variation);
 
-  @if $index != false
-  {
-    @return nth($numbers, $index);
-  }
-
-  @return 400;
-}
-
-
-
-// Give the literal weight name to construct the font filename
-// @function get-font-weight-file-name
-// @arg {number} $value The font-weight descriptor number
-// @return string
-@function get-font-weight-file-name($value)
-{
-  $numbers: (100, 200, 300, 400, 500, 600, 700, 800, 900);
-  $names: ('thin', 'extralight', 'light', 'regular', 'medium', 'semibold', 'bold', 'extrabold', 'black');
-
-  $index: index($numbers, $value);
-
-  @return nth($names, $index);
+  @return nth($variations, $index);
 }
 
 
@@ -118,7 +65,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 // http://www.w3.org/TR/css3-fonts/#descdef-src
 // @function bluid-font-face-src
 // @arg {string} $file-uri The full path with filename of the font file
-// @arg {string} $extension The file extension (without dot at the beginning)
+// @arg {string} $extension The file extension (must contain dot at the beginning)
 // @return string
 @function bluid-font-face-src(
    $file-uri
@@ -127,26 +74,26 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 {
   $format: '';
 
-  @if $extension == 'eot'
+  @if $extension == '.eot'
   {
     $extension: '#{$extension}?#iefix';
     $format: 'embedded-opentype';
   }
-  @else if $extension == 'ttf'
+  @else if $extension == '.ttf'
   {
     $format: 'truetype';
   }
-  @else if $extension == 'otf'
+  @else if $extension == '.otf'
   {
     $format: 'opentype';
   }
-  @else
+  @else if $extension == '.woff'
   {
-    $format: $extension;
+    $format: 'woff';
   }
 
   @return join(
-     url('#{$file-uri}.#{$extension}')
+     url('#{$file-uri}#{$extension}')
     ,format($format)
     ,space
   );
@@ -157,33 +104,18 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 // Built the font file name from its weight and style of defined convention
 // Convention: [ [ weight || style ] | weight-style ] && .[ eot | woff | ttf | otf | svg | svgz ]
 // Exs: regular.eot, bold-italic.woff, italic.otf, bold.svg
+// https://gist.github.com/4135145
 // @function bluid-font-file-name
-// @arg {number} $weight The font-weight descriptor value
-// @arg {string} $style The font-style descriptor value
+// @arg {string} $variation The shortened variation
 // @return string
-@function bluid-font-file-name(
-   $weight
-  ,$style
-)
+@function bluid-font-file-name($variation)
 {
-  $name: '';
+  $keywords: ('i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8', 'i9', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9');
+  $names: ('thin-italic', 'extralight-italic', 'light-italic', 'italic', 'medium-italic', 'semibold-italic', 'bold-italic', 'extrabold-italic', 'black-italic', 'thin', 'extralight', 'light', 'regular', 'medium', 'semibold', 'bold', 'extrabold', 'black');
 
-  @if $style != normal
-  {
-    $name: $style;
-  }
+  $index: index($keywords, $variation);
 
-  @if $weight != 400
-  {
-    $name: get-font-weight-file-name($weight) + if(($name != ''), '-#{$name}', '');
-  }
-
-  @if $name == ''
-  {
-    $name: get-font-weight-file-name($weight);
-  }
-
-  @return $name;
+  @return nth($names, $index);
 }
 
 
@@ -192,38 +124,26 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 // @mixin: font-face
 // @arg {string} $family-name The font-family descriptor value
 // @arg {string} $folder-name Directory name where font family files are stored
-// @arg {string} $style The font-style descriptor value
-// @arg {string|number} $weight The font-weight descriptor value
+// @arg {string} $variation Value of the shortened variation
 // @arg {list|string} $extensions The list of font extensions
 // @warn When one of font property descriptors (font-style, font-weight) or the font extension is invalid
 @mixin font-face(
    $family-name
   ,$folder-name: null
-  ,$style: normal
-  ,$weight: 400
+  ,$variation: 'n4'
   ,$extensions: $FONT_FACES_EXTENSIONS
 )
 {
   $file-name: '';
   $file-uri: '';
   $src: ();
+  $style: normal;
+  $weight: 400;
 
-  // font-style
-  @if not is-font-face-style($style)
-  {
-    @warn "#{$style} : is not a valid value for the font-style descriptor.";
-  }
 
-  // font-weight
-  @if not is-font-face-weight($weight)
+  @if is-font-face-shortened-variation($variation) == false
   {
-     @warn "#{$weight} : is not a valid value for the font-weight descriptor.";
-  }
-
-  // font-weight translation
-  @if type-of($weight) == string
-  {
-    $weight: get-font-face-weight-number($weight);
+    @warn "#{$variation} : is not a valid value for a shortened variation.";
   }
 
   // folder-name
@@ -238,14 +158,18 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
     $extensions: append((), $extensions);
   }
 
-  $file-name: bluid-font-file-name($weight, $style);
+  $file-name: bluid-font-file-name($variation);
   $file-uri: '#{$FONTS_URI}/#{$folder-name}/#{$file-name}';
+
+  $font-descriptors: explode-font-face-shortened-variation($variation);
+  $style: nth($font-descriptors, 1);
+  $weight: nth($font-descriptors, 2);
 
   @font-face {
     font-family: quote($family-name);
 
     // IE9 Compat Modes
-    @if not not index($extensions, 'eot')
+    @if not not index($extensions, '.eot')
     {
       src: url('#{$file-uri}.eot');
     }
@@ -283,44 +207,24 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 // @mixin: font-faces
 // @arg {string} $family-name The font-family descriptor value
 // @arg {string} $folder-name Directory name where font family files are stored
-// @arg {list} $variations The list of values or combinations identifying a variation of the font. Ex: (400, italic, 700, (italic, 700))
+// @arg {list} $variations List of values or combinations identifying a variation of the font. Ex: (n4, i4, n7, i7)
 // @arg {list|string} $extensions The list of font extensions
 // @warns When you put just one variation or nothing
 @mixin font-faces(
    $family-name
   ,$folder-name: null
-  ,$variations: null
+  ,$variations: ('n4', 'i4', 'n7', 'i7')
   ,$extensions: $FONT_FACES_EXTENSIONS
 )
 {
-  @if type-of($variations) == list
+   @if type-of($variations) == list
   {
     @each $variation in $variations
     {
-      $style: normal;
-      $weight: normal;
-
-      // combinaison style et weight
-      @if type-of($variation) == list
-      {
-          $weight: nth($variation, 2);
-          $style: nth($variation, 1);
-      }
-      // demande unitaire style
-      @else if is-font-face-style($variation)
-      {
-        $style: $variation;
-      }
-      // demande unitaire weight
-      @else if is-font-face-weight($variation)
-      {
-        $weight: $variation;
-      }
-
-      @include font-face($family-name, $folder-name, $style, $weight, $extensions);
+      @include font-face($family-name, $folder-name, $variation, $extensions);
     }
   }
-  @else if type-of($variations) == string or type-of($variations) == number
+  @else if type-of($variations) == string
   {
     @warn "Use font-face mixin just for one style !";
   }

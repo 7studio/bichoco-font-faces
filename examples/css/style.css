@@ -10,20 +10,6 @@
 
 @font-face {
   font-family: "Asap";
-  src: url("../fonts/asap/italic.eot");
-  src: url("../fonts/asap/italic.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/italic.woff") format("woff"), url("../fonts/asap/italic.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 400; }
-
-@font-face {
-  font-family: "Asap";
-  src: url("../fonts/asap/bold.eot");
-  src: url("../fonts/asap/bold.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/bold.woff") format("woff"), url("../fonts/asap/bold.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 700; }
-
-@font-face {
-  font-family: "Asap";
   src: url("../fonts/asap/bold-italic.eot");
   src: url("../fonts/asap/bold-italic.eot?#iefix") format("embedded-opentype"), url("../fonts/asap/bold-italic.woff") format("woff"), url("../fonts/asap/bold-italic.ttf") format("truetype");
   font-style: italic;
