@@ -12,6 +12,21 @@ $FONT_FACES_EXTENSIONS: ('.eot', '.woff', '.ttf') !default;
 
 
 
+// Find whether the given variable is a recognised shortened variation
+// @function is-font-face-shortened-variation
+// @arg {string} $arg The shortened variation being evaluated
+// @return boolean
+@function is-font-face-shortened-variation($arg)
+{
+  $values: ('i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8', 'i9', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9');
+
+  $index: index($values, $arg);
+
+  @return if(($index != false), true, false);
+}
+
+
+
 // Find whether the given variable is associated to an extension defined by the specification
 // The variable (file extension) must contain dot at the beginning
 // http://www.w3.org/TR/css3-fonts/#fontformats
