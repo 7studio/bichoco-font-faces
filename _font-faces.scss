@@ -87,33 +87,18 @@ $FONT_FACES_EXTENSIONS: ('.eot', '.woff', '.ttf') !default;
 // Built the font file name from its weight and style of defined convention
 // Convention: [ [ weight || style ] | weight-style ] && .[ eot | woff | ttf | otf | svg | svgz ]
 // Exs: regular.eot, bold-italic.woff, italic.otf, bold.svg
+// https://gist.github.com/4135145
 // @function bluid-font-file-name
-// @arg {number} $weight The font-weight descriptor value
-// @arg {string} $style The font-style descriptor value
+// @arg {string} $variation The shortened variation
 // @return string
-@function bluid-font-file-name(
-   $weight
-  ,$style
-)
+@function bluid-font-file-name($variation)
 {
-  $name: '';
+  $keywords: ('i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8', 'i9', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9');
+  $names: ('thin-italic', 'extralight-italic', 'light-italic', 'italic', 'medium-italic', 'semibold-italic', 'bold-italic', 'extrabold-italic', 'black-italic', 'thin', 'extralight', 'light', 'regular', 'medium', 'semibold', 'bold', 'extrabold', 'black');
 
-  @if $style != normal
-  {
-    $name: $style;
-  }
+  $index: index($keywords, $variation);
 
-  @if $weight != 400
-  {
-    $name: get-font-weight-file-name($weight) + if(($name != ''), '-#{$name}', '');
-  }
-
-  @if $name == ''
-  {
-    $name: get-font-weight-file-name($weight);
-  }
-
-  @return $name;
+  @return nth($names, $index);
 }
 
 
