@@ -8,19 +8,19 @@ $FONTS_URI: '' !default;
 // List of font extensions used to construct the @font-face rule
 // The list can be overloaded by an other list or a string in each mixin inclusion
 // @var {list|string} $FONT_FACES_EXTENSIONS
-$FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
+$FONT_FACES_EXTENSIONS: ('.eot', '.woff', '.ttf') !default;
 
 
 
 // Find whether the given variable is associated to an extension defined by the specification
-// The variable (file extension) must not contain dot at the beginning
+// The variable (file extension) must contain dot at the beginning
 // http://www.w3.org/TR/css3-fonts/#fontformats
 // @function is-font-face-extension
 // @arg {string} $arg The file extension being evaluated
 // @return boolean
 @function is-font-face-extension($arg)
 {
-  $extensions: ('eot', 'woff', 'ttf', 'otf');
+  $extensions: ('.eot', '.woff', '.ttf', '.otf');
 
   $index: index($extensions, $arg);
 
@@ -33,7 +33,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 // http://www.w3.org/TR/css3-fonts/#descdef-src
 // @function bluid-font-face-src
 // @arg {string} $file-uri The full path with filename of the font file
-// @arg {string} $extension The file extension (without dot at the beginning)
+// @arg {string} $extension The file extension (must contain dot at the beginning)
 // @return string
 @function bluid-font-face-src(
    $file-uri
@@ -42,26 +42,26 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
 {
   $format: '';
 
-  @if $extension == 'eot'
+  @if $extension == '.eot'
   {
     $extension: '#{$extension}?#iefix';
     $format: 'embedded-opentype';
   }
-  @else if $extension == 'ttf'
+  @else if $extension == '.ttf'
   {
     $format: 'truetype';
   }
-  @else if $extension == 'otf'
+  @else if $extension == '.otf'
   {
     $format: 'opentype';
   }
-  @else
+  @else if $extension == '.woff'
   {
-    $format: $extension;
+    $format: 'woff';
   }
 
   @return join(
-     url('#{$file-uri}.#{$extension}')
+     url('#{$file-uri}#{$extension}')
     ,format($format)
     ,space
   );
@@ -160,7 +160,7 @@ $FONT_FACES_EXTENSIONS: ('eot', 'woff', 'ttf') !default;
     font-family: quote($family-name);
 
     // IE9 Compat Modes
-    @if not not index($extensions, 'eot')
+    @if not not index($extensions, '.eot')
     {
       src: url('#{$file-uri}.eot');
     }
